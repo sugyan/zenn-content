@@ -2,6 +2,7 @@ title: "Advent of Code 2020 解答ガイド"
 summary: ""
 topics: ["adventofcode", "python"]
 published: false
+allow_override: true
 price: 500
 chapters:
   - introduction
