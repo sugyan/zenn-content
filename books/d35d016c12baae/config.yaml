@@ -3,7 +3,7 @@ summary: ""
 topics: ["adventofcode", "python"]
 published: false
 allow_override: true
-price: 500
+price: 0
 chapters:
   - introduction
   - day01
