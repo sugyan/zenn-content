@@ -20,30 +20,27 @@ https://adventofcode.com/2020/day/2
 与えられた条件を満たしている行の数を返す。
 part1では `1-3 a` は「`a` が `1`回以上 `3`回以下出現する」という意味になる。
 
-:::details 考え方
+
+#### 考え方
 
 そのまま実装するだけ。
-
-:::
 
 
 ### part2
 
 解釈が変わって、 `1-3 a` は「`1`文字目か `3`文字目 どちらかだけが `a`である」という意味になる。 indexは 0-origin ではないことに注意。
 
-:::details 考え方
+
+#### 考え方
 
 そのまま実装するだけ。
-
-:::
 
 
 ### 解答例
 
-:::details Python実装
-
 ```python
 import re
+from typing import List
 
 
 class Solution:
