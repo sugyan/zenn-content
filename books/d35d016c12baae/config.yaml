@@ -4,6 +4,7 @@ topics: ["adventofcode", "python"]
 published: false
 allow_override: true
 price: 0
+toc_depth: 0
 chapters:
   - introduction
   - day01
