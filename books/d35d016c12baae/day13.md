@@ -159,7 +159,7 @@ class Solution:
 
     def part_2(self) -> int:
         a, b = 1, 0
-        # `a * m + b` で表したときの次の `a` と `b` を求めていく
+        # `a * m + b` で表したときの次の `a` と `b` を順番に求めていく
         for i, id_str in enumerate(self.lines[1].split(",")):
             if id_str != "x":
                 bus_id = int(id_str)
