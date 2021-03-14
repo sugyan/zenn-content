@@ -78,7 +78,7 @@ from typing import List, Set, Tuple
 class Solution:
     def __init__(self, inputs: List[str]) -> None:
         # 与えられた行の文字列から座標に変換する
-        def position(s: str) -> Tuple[int, ...]:
+        def position(s: str) -> Tuple[int, int]:
             p = [0, 0]
             # `n`か`s`に続いているものは斜め移動なので横には1つだけ移動
             # そうでなければ真横に2つ移動することになる
@@ -96,10 +96,10 @@ class Solution:
                 if c == "n":
                     p[1] += 1
                     ns = True
-            return tuple(p)
+            return p[0], p[1]
 
         # 黒タイルになっているべきものの座標を格納していく
-        self.flipped: Set[Tuple[int, ...]] = set()
+        self.flipped: Set[Tuple[int, int]] = set()
         for line in inputs:
             pos = position(line)
             # 既に反転されていて白タイルに戻るのならsetから削除する
@@ -113,18 +113,19 @@ class Solution:
 
     def part_2(self) -> int:
         # 見るべき隣接タイル6枚の相対位置
-        neighbors = [[2, 0], [1, -1], [-1, -1], [-2, 0], [-1, 1], [1, 1]]
+        neighbors = ((2, 0), (1, -1), (-1, -1), (-2, 0), (-1, 1), (1, 1))
         flipped = deepcopy(self.flipped)
 
         # 与えられた座標のタイルが次の日に黒タイルになっているべきか否か
-        def flip(p: Tuple[int, ...]) -> bool:
+        def flip(p: Tuple[int, int]) -> bool:
             count = sum([tuple(map(add, p, d)) in flipped for d in neighbors])
             return count == 2 or (count == 1 and p in flipped)
 
         for _ in range(100):
             candidates = set(flipped)
             for p in flipped:
-                candidates.update([(tuple(map(add, p, d))) for d in neighbors])
+                for d in neighbors:
+                    candidates.add((p[0] + d[0], p[1] + d[1]))
             flipped = set(filter(flip, candidates))
         return len(flipped)
 ```
