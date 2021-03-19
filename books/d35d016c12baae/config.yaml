@@ -1,7 +1,11 @@
 title: "Advent of Code 2020 解答ガイド"
-summary: ""
+summary: |-
+  Advent of Codeは、毎年12月に1日から25日間、毎日問題が出題されるプログラミングパズルです。
+  Rustで解答した個人記録をPythonで書き直してまとめ直しました。
+  各日各partの問題の概要・解答例の他に、考え方についても簡単にですが書いています。
+  日本語情報がまだ少なくハードルが高いと思われるかもしれませんが、本書をきっかけに挑戦してみる仲間が増えてくれると嬉しいです。
 topics: ["adventofcode", "python"]
-published: false
+published: true
 allow_override: true
 price: 0
 toc_depth: 0
