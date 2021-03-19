@@ -84,7 +84,7 @@ class Solution:
         # 動かした後の「時計回り隣にあるcupの数字」を表すmapを得る
         next_map = self.__simulate(len(self.cups), 100)
 
-        # 順番に辿っていって回答の数値を生成していく
+        # 順番に辿っていって解の数値を生成していく
         def labels(curr: Tuple[int, int], _: int) -> Tuple[int, int]:
             cup = next_map[curr[1]]
             return (curr[0] * 10 + cup, cup)
