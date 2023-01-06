@@ -32,7 +32,7 @@ https://adventofcode.com/2022/day/1
 1人目のエルフは `1000`, `2000`, `3000` のアイテムを持っているので合計で `6000` カロリー、2人目のエルフは `4000` カロリー、3人目は合計で `11000` カロリー、ということになります。
 
 さて、最も合計値の多いのは合計で何カロリーを持っているでしょうか、という問題。
-上述の例では 4人目の合計値 `24000` が解となります。
+上述の例では 4人目の合計値 **`24000`** が解となります。
 
 
 ### 考え方
@@ -43,12 +43,14 @@ https://adventofcode.com/2022/day/1
 ## part2
 
 最も合計値の多いものだけでなく、合計値**上位3名**の総計を求めてください、という問題。
-前述の例では `24000 + 11000 + 10000` で `45000` が解となります。
+前述の例では `24000 + 11000 + 10000` で **`45000`** が解となります。
 
 
 ### 考え方
 
 上位3名を保持しながらpart1と同様にやっても良いですが、1回すべて集めてしまってから `sort` する方法を取ってしまっても良いと思います。計算量は $O(N)$ から $O(N\log{N})$ にはなってしまいますが、この問題くらいのデータ量であれば問題ありません。
+
+そうすると part1 も part2 も「上位 $n$ 名の合計値を計算する」という共通の処理に帰着することができます。
 
 
 ## 実装例
@@ -62,6 +64,7 @@ from typing import TextIO
 
 class Solution:
     def __init__(self, io: TextIO) -> None:
+        # ソート済みの合計値配列を事前に計算して保持
         self.sorted_calories = sorted(
             [sum(map(int, lines.splitlines())) for lines in io.read().split("\n\n")]
         )
@@ -82,11 +85,12 @@ if __name__ == "__main__":
     print(f"Part 2: {solution.part2()}")
 ```
 
-`"\n\n"` で区切って、あとは予め合計したもののリストとしてソートして保持します。末尾 `n` 要素の合計を返せるようにすればpart1もpart2も同様に解けます。
+`"\n\n"` で区切って、あとは予め合計したもののリストとしてソートして保持します。末尾から `n` 要素の合計を返せるようにすればpart1もpart2も同様に解けます。
 
 ### Rust
 
 ```rust
+use std::collections::BinaryHeap;
 use std::io::{BufRead, BufReader, Read};
 
 struct Solution {
@@ -95,21 +99,21 @@ struct Solution {
 
 impl Solution {
     fn new(r: impl Read) -> Self {
-        let mut calories = BufReader::new(r)
-            .lines()
-            .filter_map(Result::ok)
-            .collect::<Vec<_>>()
-            .split(String::is_empty)
-            .map(|lines| {
-                lines
-                    .iter()
-                    .filter_map(|line| line.parse::<u32>().ok())
-                    .sum()
-            })
-            .collect::<Vec<_>>();
-        calories.sort_unstable();
+        // ソート済みの合計値配列を事前に計算して保持
         Self {
-            sorted_calories: calories,
+            sorted_calories: BufReader::new(r)
+                .lines()
+                .filter_map(Result::ok)
+                .collect::<Vec<_>>()
+                .split(String::is_empty)
+                .map(|lines| {
+                    lines
+                        .iter()
+                        .filter_map(|line| line.parse::<u32>().ok())
+                        .sum()
+                })
+                .collect::<BinaryHeap<_>>()
+                .into_sorted_vec(),
         }
     }
     fn part1(&self) -> u32 {
