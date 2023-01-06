@@ -70,7 +70,7 @@ from typing import TextIO
 
 class Solution:
     def __init__(self, io: TextIO) -> None:
-        # それぞれの出現回数だけをカウントして保持
+        """それぞれの出現回数だけをカウントして保持"""
         self.counts = Counter(map(str.strip, io.readlines()))
 
     def part1(self) -> int:
@@ -124,7 +124,7 @@ struct Solution {
     counts: [u32; 9],
 }
 
-impl Solve {
+impl Solution {
     fn new(r: impl Read) -> Self {
         // それぞれの出現回数だけをカウントして保持
         let mut counts = [0; 9];

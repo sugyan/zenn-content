@@ -64,7 +64,7 @@ from typing import TextIO
 
 class Solution:
     def __init__(self, io: TextIO) -> None:
-        # ソート済みの合計値配列を事前に計算して保持
+        """ソート済みの合計値配列を事前に計算して保持"""
         self.sorted_calories = sorted(
             [sum(map(int, lines.splitlines())) for lines in io.read().split("\n\n")]
         )
