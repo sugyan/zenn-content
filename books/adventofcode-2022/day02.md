@@ -69,7 +69,7 @@ from typing import TextIO
 class Solution:
     def __init__(self, io: TextIO) -> None:
         """それぞれの出現回数だけをカウントして保持"""
-        self.counts = Counter(map(str.strip, io.readlines()))
+        self.counts = Counter(map(str.strip, io))
 
     def part1(self) -> int:
         return self.total_score(

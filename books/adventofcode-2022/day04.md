@@ -96,7 +96,7 @@ class Solution:
                 set(range(a1[0], a1[1] + 1)),
             )
 
-        self.pairs = list(map(parse, io.readlines()))
+        self.pairs = list(map(parse, io))
 
     def part1(self) -> int:
         return len(list(filter(lambda a: a[0] <= a[1] or a[1] <= a[0], self.pairs)))
