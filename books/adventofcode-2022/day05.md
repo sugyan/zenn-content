@@ -140,7 +140,7 @@ from typing import TextIO
 class Solution:
     def __init__(self, io: TextIO) -> None:
         """入力をparseし、`stacks` と `procedure` でそれぞれ保持"""
-        parts = [s.splitlines() for s in io.read().split("\n\n")]
+        parts = list(map(str.splitlines, io.read().split("\n\n")))
         self.stacks: list[list[str]] = [[] for _ in range((len(parts[0][0]) + 1) // 4)]
         for line in parts[0][-2::-1]:
             for i, c in enumerate(line[1::4]):
