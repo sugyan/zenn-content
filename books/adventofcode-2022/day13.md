@@ -276,7 +276,7 @@ impl Ord for Value {
     }
 }
 
-#[derive(PartialEq, Eq, PartialOrd, Ord)]
+#[derive(PartialEq, PartialOrd)]
 struct Packet(Value);
 
 impl FromStr for Packet {
@@ -310,7 +310,7 @@ impl Solution {
             pairs: BufReader::new(r)
                 .lines()
                 .filter_map(Result::ok)
-                .collect::<Vec<_>>()
+                .collect_vec()
                 .split(String::is_empty)
                 .filter_map(|lines| lines.iter().filter_map(|s| s.parse().ok()).collect_tuple())
                 .collect(),
@@ -332,21 +332,16 @@ impl Solution {
             .sum()
     }
     fn part2(&self) -> usize {
-        let divider_packets = ["[[2]]", "[[6]]"]
-            .iter()
-            .filter_map(|s| s.parse().ok())
-            .collect::<Vec<_>>();
-        let mut packets = self
+        let packets = self
             .pairs
             .iter()
             .flat_map(|pair| [&pair.0, &pair.1])
-            .chain(&divider_packets)
-            .collect::<Vec<_>>();
-        packets.sort();
-        divider_packets
+            .collect_vec();
+        ["[[2]]", "[[6]]"]
             .iter()
-            .filter_map(|packet| packets.binary_search(&packet).ok())
-            .map(|i| i + 1)
+            .filter_map(|s| s.parse::<Packet>().ok())
+            .enumerate()
+            .map(|(i, packet)| packets.iter().filter(|p| p < &&&packet).count() + i + 1)
             .product()
     }
 }
@@ -375,4 +370,4 @@ struct Packet(Value);
 比較については、`Value` に対して `PartialOrd`, `Ord` Traitを実装することで `<`, `>` 演算子による比較や `sort()` による並び替えを可能にしています。
 両方ともに `Value::Integer` の場合は単純に `u8::cmp` を使えるので問題ありません。それ以外の場合に、`Value` を `&[Value]` に変換する `as_slice()` という関数を用意しています。`Vec<Value>` に対しては `.as_slice()` でそれを得ることができ、`Value::Integer` の場合には `std::slice::from_ref()` を使うことで `&[Value]` に変換できます。あとは変換したスライス同士に対して `.cmp` で比較できます。
 
-あとは概ねPythonの実装と同様です。仕切りパケットの位置は `.binary_search()` で検索しています。
+あとは概ねPythonの実装と同様です。仕切りパケットの位置は `sort()` を使わずに、対象のパケットよりも小さいものをカウントして計算しています。

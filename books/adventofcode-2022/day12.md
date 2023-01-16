@@ -126,6 +126,7 @@ if __name__ == "__main__":
 ### Rust
 
 ```rust
+use itertools::Itertools;
 use std::collections::VecDeque;
 use std::io::{BufRead, BufReader, Read};
 
@@ -138,8 +139,8 @@ impl Solution {
         let heightmap = BufReader::new(r)
             .lines()
             .filter_map(Result::ok)
-            .map(|s| s.bytes().collect::<Vec<_>>())
-            .collect::<Vec<_>>();
+            .map(|s| s.bytes().collect_vec())
+            .collect_vec();
         let (rows, cols) = (heightmap.len(), heightmap[0].len());
         let mut vd = VecDeque::new();
         for (i, row) in heightmap.iter().enumerate() {

@@ -88,7 +88,7 @@ if __name__ == "__main__":
 ### Rust
 
 ```rust
-use std::collections::BinaryHeap;
+use itertools::Itertools;
 use std::io::{BufRead, BufReader, Read};
 
 struct Solution {
@@ -102,7 +102,7 @@ impl Solution {
             sorted_calories: BufReader::new(r)
                 .lines()
                 .filter_map(Result::ok)
-                .collect::<Vec<_>>()
+                .collect_vec()
                 .split(String::is_empty)
                 .map(|lines| {
                     lines
@@ -110,8 +110,8 @@ impl Solution {
                         .filter_map(|line| line.parse::<u32>().ok())
                         .sum()
                 })
-                .collect::<BinaryHeap<_>>()
-                .into_sorted_vec(),
+                .sorted()
+                .collect(),
         }
     }
     fn part1(&self) -> u32 {
