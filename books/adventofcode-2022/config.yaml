@@ -4,7 +4,7 @@ summary: |-
   解答した個人記録として、各日各partの問題の概要・解答例の他に、考え方についても簡単にですが書いています。
   日本語情報がまだ少なくハードルが高いと思われるかもしれませんが、本書をきっかけに挑戦してみる仲間が増えてくれると嬉しいです。
 topics: ["adventofcode", "rust", "python"]
-published: false
+published: true
 price: 0
 chapters:
   - introduction
